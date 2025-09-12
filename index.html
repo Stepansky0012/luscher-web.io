@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Lüscher WebApp</title>
+  <!-- SDK Telegram WebApp (в Telegram работает; в браузере — просто не помешает) -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root{
+      --bg:#0b0c10;--panel:#121318;--text:#e7e9ee;--muted:#a7adbb;--accent:#7c4dff;--primary:#4c8bf5;
+      --radius:16px;--shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    .wrap{min-height:100%;display:grid;grid-template-rows:auto 1fr auto}
+    header,footer{background:linear-gradient(180deg,rgba(18,19,24,.95),rgba(18,19,24,.75));backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06)}
+    footer{border-top:1px solid rgba(255,255,255,.06);border-bottom:none}
+    .container{max-width:900px;margin:0 auto;padding:16px 20px}
+    .panel{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:600;color:var(--text);background:#1a1c23;border:1px solid rgba(255,255,255,.08)}
+    .btn.primary{background:linear-gradient(180deg,#3f7ff3,#346fe0);box-shadow:0 4px 16px rgba(76,139,245,.35)}
+    .hero{padding:28px 20px;text-align:center}
+    .hero h1{margin:8px 0 6px;font-size:22px}
+    .rules{max-width:680px;margin:16px auto 0;text-align:left;background:#101218;border:1px solid rgba(255,255,255,.06);padding:14px 16px;border-radius:12px}
+    .stage{display:none}.stage.active{display:block}
+    .phase{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:10px;align-items:center}
+    .badge{font-size:12px;padding:4px 8px;border-radius:999px;background:#1c2030;border:1px solid rgba(255,255,255,.08);color:#c7d2fe}
+    .progress{height:8px;background:#0f1220;border:1px solid rgba(255,255,255,.06);border-radius:999px;overflow:hidden;width:100%}
+    .bar{height:100%;width:0%;background:linear-gradient(90deg,#7c4dff,#4c8bf5);transition:width .25s ease}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:16px}
+    @media (max-width:560px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .tile{height:84px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.25);position:relative;cursor:pointer;border:1px solid rgba(255,255,255,.06);transition:transform .12s}
+    .tile:hover{transform:translateY(-2px)}
+    .label{position:absolute;bottom:8px;left:10px;right:10px;font-weight:700;font-size:13px;color:rgba(255,255,255,.92);text-shadow:0 1px 1px rgba(0,0,0,.35);display:flex;gap:6px;align-items:center}
+    .chip{font-size:11px;line-height:1;padding:4px 6px;border-radius:999px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.18)}
+    .muted{color:var(--muted);font-size:13px}
+    .finish{padding:18px 16px}
+    .grid2{display:grid;grid-template-columns:auto 1fr;gap:6px 12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><div class="container"><b>Цветовой тест Люшера — Мини-приложение</b></div></header>
+    <main><div class="container">
+      <!-- Старт -->
+      <section class="panel hero" id="screen-start">
+        <h1>Готовы к небольшому маршруту в два круга?</h1>
+        <p class="muted">Выберите цвета по привлекательности дважды. Данные уйдут боту, а ниже в окне отобразятся простые результаты.</p>
+        <div class="rules">
+          <b>Правила кратко</b>
+          <ul>
+            <li>Решайте быстро, интуитивно.</li>
+            <li><b>Круг 1</b>: выберите все 8 цветов от «нравится» к «не нравится».</li>
+            <li><b>Круг 2</b>: повторите выбор ещё раз.</li>
+          </ul>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+          <button class="btn primary" id="btn-start">Начать</button>
+          <button class="btn" id="btn-demo">Демо</button>
+        </div>
+      </section>
+
+      <!-- Выбор -->
+      <section class="panel stage" id="screen-grid">
+        <div class="phase">
+          <span class="badge" id="badge-phase">Круг 1</span>
+          <div class="progress"><div id="bar" class="bar"></div></div>
+          <span class="badge" id="badge-count">0/8</span>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <!-- Итоги (не закрывая страницу) -->
+      <section class="panel stage finish" id="screen-finish">
+        <h3 style="margin:0 0 8px">Готово! Данные сформированы</h3>
+        <div id="result"></div>
+        <p class="muted" style="margin-top:8px">В чат бота уже отправлено: «Результаты» → «Для тебя» → «Сказка».</p>
+        <textarea id="out" rows="8" style="width:100%;margin-top:8px;background:#0e1220;color:var(--text);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace"></textarea>
+      </section>
+    </div></main>
+    <footer><div class="container"><span class="muted">Поддерживает тему Telegram. Сброс — перезагрузка страницы.</span></div></footer>
+  </div>
+
+  <script>
+    // --- Telegram WebApp SDK ---
+    const tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+    if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
+    function applyTheme(){
+      if (!tg) return;
+      const th = tg.themeParams||{}, root = document.documentElement.style;
+      if (th.bg_color) root.setProperty('--bg', th.bg_color);
+      if (th.secondary_bg_color) root.setProperty('--panel', th.secondary_bg_color);
+      if (th.text_color) root.setProperty('--text', th.text_color);
+      if (th.hint_color) root.setProperty('--muted', th.hint_color);
+      if (th.button_color) root.setProperty('--primary', th.button_color);
+    }
+    applyTheme();
+
+    // --- Палитра и состояние ---
+    const COLORS = [
+      { id:0, name:'Grey',   emoji:'🩶', hex:'#9aa0a6' },
+      { id:1, name:'Blue',   emoji:'🔵', hex:'#1a73e8' },
+      { id:2, name:'Green',  emoji:'🟢', hex:'#34a853' },
+      { id:3, name:'Red',    emoji:'🔴', hex:'#ea4335' },
+      { id:4, name:'Yellow', emoji:'🟡', hex:'#fbbc04' },
+      { id:5, name:'Violet', emoji:'🟣', hex:'#8e24aa' },
+      { id:6, name:'Brown',  emoji:'🟤', hex:'#8d6e63' },
+      { id:7, name:'Black',  emoji:'⚫', hex:'#202124' },
+    ];
+    const el = {
+      start: document.getElementById('screen-start'),
+      grid: document.getElementById('screen-grid'),
+      finish: document.getElementById('screen-finish'),
+      gridBox: document.getElementById('grid'),
+      phaseBadge: document.getElementById('badge-phase'),
+      countBadge: document.getElementById('badge-count'),
+      bar: document.getElementById('bar'),
+      out: document.getElementById('out'),
+      result: document.getElementById('result'),
+    };
+    let phase = 0, pick1 = [], pick2 = [];
+
+    function start(){
+      phase = 1; pick1 = []; pick2 = [];
+      el.start.style.display = 'none';
+      el.grid.classList.add('active');
+      renderTiles(remaining());
+    }
+    function remaining(){
+      const arr = (phase===1? pick1 : pick2);
+      return COLORS.map(c=>c.id).filter(id => !arr.includes(id));
+    }
+    function renderTiles(ids){
+      el.gridBox.innerHTML = '';
+      ids.forEach(id=>{
+        const c = COLORS.find(x=>x.id===id);
+        const d = document.createElement('div');
+        d.className='tile'; d.style.background=c.hex; d.setAttribute('role','button');
+        d.onclick=()=>choose(id,d);
+        const lab=document.createElement('div'); lab.className='label'; lab.innerHTML=`<span class="chip">${c.emoji}</span> ${c.name}`;
+        d.appendChild(lab); el.gridBox.appendChild(d);
+      });
+      updateProgress();
+    }
+    function updateProgress(){
+      const done = (phase===1? pick1.length : pick2.length);
+      el.countBadge.textContent = `${done}/8`;
+      el.bar.style.width = `${Math.round(done/8*100)}%`;
+      el.phaseBadge.textContent = `Круг ${phase}`;
+    }
+    function choose(id,node){
+      const arr = (phase===1? pick1 : pick2);
+      if (arr.includes(id)) return;
+      arr.push(id);
+      if (node){ node.style.opacity='.65'; node.style.pointerEvents='none'; }
+      updateProgress();
+      if (arr.length===8){
+        if (phase===1){ phase=2; renderTiles(remaining()); }
+        else { finish(); }
+      }
+    }
+
+    // --- Простая интерпретация/группы ---
+    function groupOf(pos){ if (pos<=1) return '++'; if (pos<=3) return '+'; if (pos<=5) return 'x'; return '--'; }
+    function toPosMap(order){ const m={}; order.forEach((id,i)=>m[id]=i); return m; }
+    function score(p2){
+      const pos = toPosMap(p2), groups = {'++':[], '+':[], 'x':[], '--':[]};
+      COLORS.forEach(c => groups[groupOf(pos[c.id])].push(c.name));
+      const hi = [];
+      if (groups['++'].includes('Black') || groups['++'].includes('Grey')) hi.push('Запрос на дистанцию/границы/разрыв.');
+      if (groups['++'].includes('Blue'))   hi.push('Сильная потребность в принятии и покое.');
+      if (groups['++'].includes('Red'))    hi.push('Импульс к действию и результату.');
+      if (groups['++'].includes('Yellow')) hi.push('Потребность в надежде и перспективе.');
+      if (groups['--'].includes('Blue'))   hi.push('Отвержение тепла → риск эмоциональной изоляции.');
+      if (groups['--'].includes('Green'))  hi.push('Ощущение снижения контроля/самоуважения.');
+      return { positions: pos, groups, highlights: hi };
+    }
+
+    function finish(){
+      const payload = { type:'luscher', version:'1.0.0', ts:Date.now(), pick1, pick2, result: score(pick2) };
+      // 1) Отправляем в бота (n8n поймает web_app_data)
+      if (tg){ try { tg.sendData(JSON.stringify(payload)); } catch(e){ console.warn('sendData error', e); } }
+      // 2) Показываем итоги локально, не закрывая страницу
+      el.grid.classList.remove('active');
+      el.finish.classList.add('active');
+      const g = payload.result.groups;
+      el.result.innerHTML =
+        `<div class="grid2">
+          <div><b>++</b></div><div>${(g['++']||[]).join(', ')||'—'}</div>
+          <div><b>+</b></div><div>${(g['+']||[]).join(', ')||'—'}</div>
+          <div><b>x</b></div><div>${(g['x']||[]).join(', ')||'—'}</div>
+          <div><b>--</b></div><div>${(g['--']||[]).join(', ')||'—'}</div>
+        </div>
+        ${payload.result.highlights.length ? `<p class="muted" style="margin-top:8px">Акценты: ${payload.result.highlights.join(' ')}</p>` : ''}`;
+      el.out.value = JSON.stringify(payload, null, 2);
+    }
+
+    // --- Кнопки ---
+    document.getElementById('btn-start').onclick = start;
+    document.getElementById('btn-demo').onclick = ()=>{
+      const ids = COLORS.map(c=>c.id);
+      pick1 = ids.slice().sort(()=>Math.random()-.5);
+      pick2 = ids.slice().sort(()=>Math.random()-.5);
+      phase = 2; finish();
+    };
+  </script>
+</body>
+</html>
