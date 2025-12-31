@@ -16,14 +16,15 @@
       --gold: #ffd700;
       --silver: #c0c0c0;
       --success: #34a853;
-      --radius: 20px;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      --radius: 16px;
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html, body {
@@ -35,65 +36,15 @@
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      line-height: 1.6;
+      line-height: 1.5;
       position: relative;
       min-height: 100vh;
     }
 
-    /* Снежинки */
-    .snowflake {
-      position: fixed;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: fall linear infinite;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    /* Новогодние огоньки */
-    .lights {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, 
-        #ff0000, #ff9900, #ffff00, #00ff00, 
-        #00ffff, #0000ff, #9900ff, #ff0000
-      );
-      background-size: 800% 100%;
-      animation: lightsMove 20s linear infinite;
-      z-index: 2;
-    }
-
-    @keyframes lightsMove {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 800% 50%; }
-    }
-
-    /* Основной контейнер */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 16px;
       width: 100%;
     }
 
@@ -102,7 +53,7 @@
       background: rgba(8, 28, 50, 0.95);
       backdrop-filter: blur(10px);
       border-bottom: 2px solid rgba(45, 212, 191, 0.3);
-      padding: 1rem 0;
+      padding: 12px 0;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -111,33 +62,27 @@
     .header-content {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
+      text-align: center;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      font-size: 1.2rem;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 1rem;
     }
 
     .logo-icon {
-      font-size: 1.5rem;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      font-size: 1.2rem;
     }
 
     /* Основной контент */
     .main-content {
-      padding: 2rem 0 4rem;
-      min-height: calc(100vh - 140px);
+      padding: 20px 0 40px;
+      min-height: calc(100vh - 120px);
       display: flex;
       align-items: center;
     }
@@ -149,12 +94,12 @@
 
     .screen.active {
       display: block;
-      animation: fadeIn 0.5s ease;
+      animation: fadeIn 0.3s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     /* Карточка */
@@ -165,53 +110,46 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       overflow: hidden;
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
     }
 
     /* Экраны */
     .welcome-screen {
       text-align: center;
-      padding: 3rem 2rem;
+      padding: 24px 16px;
     }
 
     .title {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--primary), var(--gold), var(--secondary));
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--gold));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .year-2026 {
       color: var(--gold);
-      font-size: 3rem;
-      margin: 0.5rem 0;
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-      animation: glow 2s ease-in-out infinite alternate;
+      font-size: 2.2rem;
+      margin: 12px 0;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-      to { text-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 480px) {
       .title {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
       .year-2026 {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
       }
     }
 
     .subtitle {
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: var(--muted);
-      margin-bottom: 2rem;
-      max-width: 600px;
+      margin-bottom: 20px;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -220,58 +158,50 @@
     .instructions {
       background: rgba(12, 27, 44, 0.6);
       border: 1px solid rgba(45, 212, 191, 0.2);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin: 2rem auto;
-      max-width: 700px;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 20px auto;
+      max-width: 600px;
     }
 
     .instructions-title {
       color: var(--primary);
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .steps {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      counter-reset: step-counter;
+      gap: 12px;
     }
 
     .step {
       display: flex;
       align-items: flex-start;
-      gap: 1rem;
-      padding: 0.5rem;
+      gap: 10px;
+      padding: 8px;
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      transition: transform 0.3s ease;
+      border-radius: 8px;
     }
 
-    .step:hover {
-      transform: translateX(5px);
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .step::before {
-      counter-increment: step-counter;
-      content: counter(step-counter);
+    .step-icon {
       background: var(--primary);
       color: white;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       font-weight: bold;
+      font-size: 0.9rem;
     }
 
     .step-content {
@@ -280,19 +210,21 @@
 
     .step-title {
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      margin-bottom: 4px;
       color: var(--text);
+      font-size: 0.95rem;
     }
 
     .step-desc {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
     }
 
     /* Панель прогресса */
     .progress-panel {
       background: rgba(8, 28, 50, 0.9);
-      padding: 1.5rem;
+      padding: 16px;
       border-bottom: 2px solid rgba(45, 212, 191, 0.3);
     }
 
@@ -300,48 +232,48 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 12px;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .phase-badge {
       background: linear-gradient(135deg, var(--primary), #22c55e);
       color: white;
-      padding: 0.5rem 1rem;
+      padding: 6px 12px;
       border-radius: 20px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .counter {
       background: rgba(255, 255, 255, 0.1);
       color: var(--text);
-      padding: 0.5rem 1rem;
+      padding: 6px 12px;
       border-radius: 20px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .progress-container {
-      margin: 1rem 0;
+      margin: 12px 0;
     }
 
     .progress-label {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
       color: var(--muted);
     }
 
     .progress-bar {
-      height: 12px;
+      height: 10px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 6px;
+      border-radius: 5px;
       overflow: hidden;
     }
 
@@ -350,308 +282,219 @@
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       width: 0%;
       transition: width 0.3s ease;
-      position: relative;
-      overflow: hidden;
     }
 
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      animation: shimmer 2s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    /* Сетка цветов */
+    /* Сетка цветов - ФИКСИРОВАННАЯ РАСКЛАДКА */
     .colors-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .colors-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        padding: 1.5rem;
-      }
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 12px;
+      padding: 16px;
+      min-height: 360px;
+      height: 50vh;
+      max-height: 400px;
     }
 
     @media (max-width: 480px) {
       .colors-grid {
-        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 12px;
+        min-height: 300px;
+        height: 45vh;
       }
     }
 
     .color-card {
-      aspect-ratio: 1;
-      border-radius: 20px;
       position: relative;
+      border-radius: 12px;
       cursor: pointer;
       overflow: hidden;
-      border: 3px solid transparent;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+      opacity: 1;
     }
 
-    .color-card:hover:not(.selected) {
-      transform: translateY(-5px) scale(1.05);
-      border-color: var(--gold);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    .color-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
 
     .color-card.selected {
-      animation: selectPulse 0.5s ease;
-      border-color: var(--success);
       opacity: 0.3;
-      cursor: default;
-      transform: scale(0.95);
+      pointer-events: none;
+      border-color: var(--success);
     }
 
-    @keyframes selectPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(0.9); }
-      100% { transform: scale(0.95); }
-    }
-
-    .selected-badge {
+    .color-card.selected::after {
+      content: '✓';
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: var(--success);
       color: white;
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
+      font-weight: bold;
       z-index: 2;
-      animation: badgeAppear 0.3s ease;
-    }
-
-    @keyframes badgeAppear {
-      from { transform: translate(-50%, -50%) scale(0); }
-      to { transform: translate(-50%, -50%) scale(1); }
     }
 
     .color-info {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-      padding: 1rem;
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
-    }
-
-    .color-card:hover .color-info {
-      transform: translateY(0);
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
     }
 
     .color-name {
       font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
     .color-desc {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
     /* Экран результатов */
     .results-screen {
-      padding: 2.5rem;
+      padding: 20px 16px;
     }
 
     .results-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 20px;
     }
 
     .results-title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
       color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 15px;
+      gap: 10px;
     }
 
     .results-subtitle {
       color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      font-size: 0.95rem;
+      max-width: 500px;
+      margin: 0 auto 20px;
     }
 
     /* Группы результатов */
     .results-groups {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .result-group {
       background: rgba(12, 27, 44, 0.7);
-      border-radius: 15px;
-      padding: 1.5rem;
+      border-radius: 12px;
+      padding: 16px;
       border: 1px solid rgba(45, 212, 191, 0.2);
-      transition: transform 0.3s ease;
-    }
-
-    .result-group:hover {
-      transform: translateY(-5px);
     }
 
     .group-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 1rem;
+      gap: 8px;
+      margin-bottom: 10px;
       color: var(--gold);
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 600;
     }
 
     .group-content {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 6px;
     }
 
     .color-tag {
       background: rgba(255, 255, 255, 0.1);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-
-    .color-tag:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
+      padding: 6px 10px;
+      border-radius: 16px;
+      font-size: 0.85rem;
     }
 
     /* Новогодняя история */
     .story-container {
       background: linear-gradient(135deg, rgba(45, 212, 191, 0.1), rgba(255, 51, 102, 0.1));
       border: 2px solid var(--gold);
-      border-radius: 20px;
-      padding: 2rem;
-      margin: 2rem 0;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
       position: relative;
-      overflow: hidden;
-    }
-
-    .story-container::before {
-      content: '✨';
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      font-size: 2rem;
-      animation: sparkle 2s infinite;
-    }
-
-    @keyframes sparkle {
-      0%, 100% { opacity: 0.5; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.2); }
     }
 
     .story-title {
       color: var(--gold);
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .story-content {
-      font-size: 1.1rem;
-      line-height: 1.7;
+      font-size: 1rem;
+      line-height: 1.6;
       color: var(--text);
-      margin-bottom: 1.5rem;
+      margin-bottom: 16px;
     }
 
     .new-year-wish {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(45, 212, 191, 0.2));
-      border-left: 4px solid var(--gold);
-      padding: 1.5rem;
-      border-radius: 10px;
-      margin-top: 1.5rem;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(45, 212, 191, 0.15));
+      border-left: 3px solid var(--gold);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
       font-style: italic;
       color: var(--muted);
-      position: relative;
-    }
-
-    .new-year-wish::before {
-      content: '🎆';
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.5rem;
-      background: var(--panel);
-      padding: 0 10px;
     }
 
     /* Кнопки */
     .btn {
       border: none;
-      border-radius: 12px;
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
+      gap: 8px;
       width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: 0.5s;
-    }
-
-    .btn:hover::before {
-      left: 100%;
     }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), #22c55e);
       color: white;
-      box-shadow: 0 4px 20px rgba(45, 212, 191, 0.4);
+      box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
     }
 
     .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(45, 212, 191, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(45, 212, 191, 0.4);
     }
 
     .btn-secondary {
@@ -662,32 +505,31 @@
 
     .btn-secondary:hover {
       background: rgba(255, 51, 102, 0.25);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
     .btn-group {
       display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 2rem;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
     }
 
     /* Текстовое поле результатов */
     .results-output {
-      margin-top: 2rem;
+      margin-top: 20px;
     }
 
     .results-textarea {
       width: 100%;
-      min-height: 200px;
+      min-height: 150px;
       background: rgba(12, 27, 44, 0.8);
       color: var(--text);
       border: 2px solid rgba(45, 212, 191, 0.3);
-      border-radius: 12px;
-      padding: 1.5rem;
+      border-radius: 10px;
+      padding: 12px;
       font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       resize: vertical;
       line-height: 1.5;
     }
@@ -701,103 +543,40 @@
     .hint {
       text-align: center;
       color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 1rem;
-      padding: 1rem;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      padding: 10px;
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
+      border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* Подвал */
     .footer {
       background: rgba(8, 28, 50, 0.95);
-      backdrop-filter: blur(10px);
       border-top: 2px solid rgba(45, 212, 191, 0.3);
-      padding: 1.5rem 0;
+      padding: 16px 0;
       text-align: center;
     }
 
     .footer-text {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     /* Адаптивные стили */
-    @media (max-width: 768px) {
-      .main-content {
-        padding: 1rem 0 2rem;
-      }
-      
-      .welcome-screen,
-      .results-screen {
-        padding: 1.5rem;
-      }
-      
-      .btn {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-      }
-      
-      .progress-panel {
-        padding: 1rem;
-      }
-      
-      .results-groups {
-        grid-template-columns: 1fr;
-      }
-      
-      .story-container {
-        padding: 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .title {
-        font-size: 1.8rem;
-      }
-      
-      .subtitle {
-        font-size: 1rem;
-      }
-      
+    @media (min-width: 481px) {
       .btn-group {
-        flex-direction: column;
+        flex-direction: row;
       }
       
       .btn {
-        width: 100%;
+        width: auto;
       }
-      
-      .header-content {
-        justify-content: center;
-      }
-      
-      .phase-badge, .counter {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
-      }
-    }
-
-    /* Анимация успеха */
-    @keyframes success {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    .success-animation {
-      animation: success 0.5s ease;
     }
   </style>
 </head>
 <body>
-  <!-- Новогодние огоньки -->
-  <div class="lights"></div>
-  
-  <!-- Снежинки -->
-  <div id="snowflakes"></div>
-
   <div class="app">
     <!-- Шапка -->
     <header class="header">
@@ -807,7 +586,6 @@
             <span class="logo-icon">🎄</span>
             <span>Новогодний тест Люшера 2026</span>
           </div>
-          <div class="phase-indicator" id="phase-indicator"></div>
         </div>
       </div>
     </header>
@@ -821,8 +599,7 @@
             <h1 class="title">Откройте свою новогоднюю историю</h1>
             <div class="year-2026">2026</div>
             <p class="subtitle">
-              Пройдите простой цветовой тест и получите персональное новогоднее предсказание, 
-              основанное на вашем психологическом профиле
+              Пройдите простой цветовой тест и получите персональное новогоднее предсказание на 2026 год
             </p>
             
             <div class="instructions">
@@ -833,6 +610,7 @@
               
               <div class="steps">
                 <div class="step">
+                  <div class="step-icon">1</div>
                   <div class="step-content">
                     <div class="step-title">Быстрый выбор</div>
                     <div class="step-desc">Выбирайте цвета интуитивно, не задумываясь. Первая реакция — самая честная.</div>
@@ -840,23 +618,18 @@
                 </div>
                 
                 <div class="step">
+                  <div class="step-icon">2</div>
                   <div class="step-content">
-                    <div class="step-title">Выбранные цвета пропадают</div>
-                    <div class="step-desc">После выбора цвет исчезает из списка — так вы видите свой прогресс.</div>
+                    <div class="step-title">Все цвета видны сразу</div>
+                    <div class="step-desc">Все 8 цветов отображены на экране. Выбранные цвета становятся прозрачными.</div>
                   </div>
                 </div>
                 
                 <div class="step">
+                  <div class="step-icon">3</div>
                   <div class="step-content">
                     <div class="step-title">Два круга выбора</div>
-                    <div class="step-desc">Первый круг: расставьте все цвета по предпочтениям. Второй круг: повторите выбор.</div>
-                  </div>
-                </div>
-                
-                <div class="step">
-                  <div class="step-content">
-                    <div class="step-title">Персональная история 2026</div>
-                    <div class="step-desc">На основе ваших выборов система создаст уникальную новогоднюю историю для 2026 года.</div>
+                    <div class="step-desc">Сначала выберите все 8 цветов, затем повторите выбор ещё раз.</div>
                   </div>
                 </div>
               </div>
@@ -865,12 +638,12 @@
             <div class="btn-group">
               <button class="btn btn-primary" id="btn-start">
                 <span>🎄</span>
-                <span>Начать новогодний тест</span>
+                <span>Начать тест</span>
               </button>
             </div>
             
             <div class="hint">
-              💡 Выбирайте быстро! Цвета будут исчезать после выбора. Первая реакция на цвет — самая точная.
+              💡 Выбирайте цвета быстро! Первая реакция — самая точная.
             </div>
           </div>
         </section>
@@ -898,12 +671,13 @@
               </div>
               
               <div class="hint" id="selection-hint">
-                🎨 <strong>Круг 1:</strong> Выбирайте цвета от самого приятного к наименее приятному. Выбранные цвета будут исчезать.
+                🎨 Выбирайте цвета от самого приятного к наименее приятному
               </div>
             </div>
             
+            <!-- ФИКСИРОВАННАЯ СЕТКА 4x2 -->
             <div class="colors-grid" id="colors-grid">
-              <!-- Цвета будут добавлены через JavaScript -->
+              <!-- Все 8 цветов будут добавлены один раз и останутся на своих местах -->
             </div>
           </div>
         </section>
@@ -917,7 +691,7 @@
                 <span>Ваша новогодняя история 2026 готова!</span>
               </h2>
               <p class="results-subtitle">
-                На основе ваших цветовых предпочтений создана персональная психологическая характеристика и новогоднее пожелание на 2026 год
+                На основе ваших цветовых предпочтений создана персональная новогодняя история
               </p>
             </div>
             
@@ -952,9 +726,9 @@
                 <span>🔄</span>
                 <span>Пройти ещё раз</span>
               </button>
-              <button class="btn btn-secondary" id="btn-share">
-                <span>📤</span>
-                <span>Сохранить результаты</span>
+              <button class="btn btn-secondary" id="btn-copy">
+                <span>📋</span>
+                <span>Копировать результаты</span>
               </button>
             </div>
           </div>
@@ -966,7 +740,7 @@
     <footer class="footer">
       <div class="container">
         <p class="footer-text">
-          ✨ С наступающим Новым 2026 Годом! Пусть он принесёт вам счастье, гармонию и исполнение всех желаний!
+          ✨ С наступающим Новым 2026 Годом! Пусть он принесёт вам счастье и гармонию
         </p>
       </div>
     </footer>
@@ -986,90 +760,16 @@
       }
     }
 
-    // --- Создание снежинок ---
-    function createSnowflakes() {
-      const container = document.getElementById('snowflakes');
-      container.innerHTML = '';
-      for (let i = 0; i < 30; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.className = 'snowflake';
-        const size = Math.random() * 5 + 2;
-        snowflake.style.width = `${size}px`;
-        snowflake.style.height = `${size}px`;
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        snowflake.style.animationDelay = `${Math.random() * 2}s`;
-        snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-        container.appendChild(snowflake);
-      }
-    }
-
-    // --- Палитра цветов Люшера ---
+    // --- Палитра цветов Люшера (ТОЧНО ТАКАЯ ЖЕ КАК В ОРИГИНАЛЕ) ---
     const COLORS = [
-      { 
-        id: 0, 
-        name: 'Серый', 
-        emoji: '🩶', 
-        hex: '#9aa0a6', 
-        meaning: 'Нейтральность, спокойствие, баланс',
-        desc: 'Стремление к гармонии и стабильности'
-      },
-      { 
-        id: 1, 
-        name: 'Синий', 
-        emoji: '🔵', 
-        hex: '#1a73e8', 
-        meaning: 'Гармония, умиротворение, доверие',
-        desc: 'Потребность в покое и эмоциональной безопасности'
-      },
-      { 
-        id: 2, 
-        name: 'Зелёный', 
-        emoji: '🟢', 
-        hex: '#34a853', 
-        meaning: 'Уверенность, настойчивость, самоутверждение',
-        desc: 'Стремление к признанию и контролю'
-      },
-      { 
-        id: 3, 
-        name: 'Красный', 
-        emoji: '🔴', 
-        hex: '#ea4335', 
-        meaning: 'Энергия, действие, страсть',
-        desc: 'Желание достижений и активности'
-      },
-      { 
-        id: 4, 
-        name: 'Жёлтый', 
-        emoji: '🟡', 
-        hex: '#fbbc04', 
-        meaning: 'Надежда, оптимизм, радость',
-        desc: 'Стремление к свободе и новым возможностям'
-      },
-      { 
-        id: 5, 
-        name: 'Фиолетовый', 
-        emoji: '🟣', 
-        hex: '#8e24aa', 
-        meaning: 'Творчество, интуиция, духовность',
-        desc: 'Желание впечатлений и самовыражения'
-      },
-      { 
-        id: 6, 
-        name: 'Коричневый', 
-        emoji: '🟤', 
-        hex: '#8d6e63', 
-        meaning: 'Стабильность, безопасность, комфорт',
-        desc: 'Потребность в физическом удобстве'
-      },
-      { 
-        id: 7, 
-        name: 'Чёрный', 
-        emoji: '⚫', 
-        hex: '#202124', 
-        meaning: 'Протест, границы, независимость',
-        desc: 'Желание перемен и освобождения'
-      }
+      { id: 0, name: 'Grey', ruName: 'Серый', emoji: '🩶', hex: '#9aa0a6' },
+      { id: 1, name: 'Blue', ruName: 'Синий', emoji: '🔵', hex: '#1a73e8' },
+      { id: 2, name: 'Green', ruName: 'Зелёный', emoji: '🟢', hex: '#34a853' },
+      { id: 3, name: 'Red', ruName: 'Красный', emoji: '🔴', hex: '#ea4335' },
+      { id: 4, name: 'Yellow', ruName: 'Жёлтый', emoji: '🟡', hex: '#fbbc04' },
+      { id: 5, name: 'Violet', ruName: 'Фиолетовый', emoji: '🟣', hex: '#8e24aa' },
+      { id: 6, name: 'Brown', ruName: 'Коричневый', emoji: '🟤', hex: '#8d6e63' },
+      { id: 7, name: 'Black', ruName: 'Чёрный', emoji: '⚫', hex: '#202124' },
     ];
 
     // --- Элементы DOM ---
@@ -1082,7 +782,7 @@
       buttons: {
         start: document.getElementById('btn-start'),
         restart: document.getElementById('btn-restart'),
-        share: document.getElementById('btn-share')
+        copy: document.getElementById('btn-copy')
       },
       progress: {
         phaseBadge: document.getElementById('phase-badge'),
@@ -1103,116 +803,86 @@
 
     // --- Состояние приложения ---
     let state = {
-      phase: 1, // 1 или 2
+      phase: 1,
       picks: {
         first: [],
         second: []
-      }
+      },
+      colorCards: []
     };
 
     // --- Функции управления экранами ---
     function showScreen(screenName) {
-      // Скрыть все экраны
       Object.values(elements.screens).forEach(screen => {
         screen.classList.remove('active');
       });
-      
-      // Показать нужный экран
       elements.screens[screenName].classList.add('active');
-      
-      // Если переходим на экран цветов, добавляем снежинки
-      if (screenName === 'colors') {
-        createSnowflakes();
-      }
     }
 
     // --- Инициализация теста ---
     function startTest() {
       state = {
         phase: 1,
-        picks: { first: [], second: [] }
+        picks: { first: [], second: [] },
+        colorCards: []
       };
       
+      createColorGrid();
       updateProgress();
-      renderColors();
       showScreen('colors');
     }
 
-    // --- Рендер цветов ---
-    function renderColors() {
+    // --- Создание фиксированной сетки цветов ---
+    function createColorGrid() {
       elements.grid.innerHTML = '';
+      state.colorCards = [];
       
-      // Получаем доступные для выбора цвета (те, что ещё не выбраны в текущем круге)
-      const availableColors = getAvailableColors();
-      
-      if (availableColors.length === 0) {
-        // Все цвета выбраны, переход к следующему кругу или завершение
-        if (state.phase === 1) {
-          state.phase = 2;
-          updateProgress();
-          renderColors();
-        } else {
-          finishTest();
-        }
-        return;
-      }
-      
-      // Сортируем доступные цвета по их ID для единообразия отображения
-      availableColors.sort((a, b) => a.id - b.id).forEach(color => {
+      COLORS.forEach((color, index) => {
         const colorCard = document.createElement('div');
         colorCard.className = 'color-card';
         colorCard.style.background = color.hex;
         colorCard.dataset.id = color.id;
-        colorCard.dataset.name = color.name;
+        colorCard.dataset.index = index;
         
-        colorCard.onclick = () => selectColor(color.id, colorCard);
-        
-        // Информация о цвете
         const colorInfo = document.createElement('div');
         colorInfo.className = 'color-info';
         colorInfo.innerHTML = `
-          <div class="color-name">${color.emoji} ${color.name}</div>
-          <div class="color-desc">${color.meaning}</div>
+          <div class="color-name">${color.emoji} ${color.ruName}</div>
+          <div class="color-desc">${color.meaning || color.ruName}</div>
         `;
         colorCard.appendChild(colorInfo);
         
+        colorCard.onclick = () => selectColor(color.id, colorCard);
+        
         elements.grid.appendChild(colorCard);
+        state.colorCards.push(colorCard);
       });
-    }
-
-    // --- Получение доступных цветов ---
-    function getAvailableColors() {
-      const currentPicks = state.phase === 1 ? state.picks.first : state.picks.second;
-      return COLORS.filter(color => !currentPicks.includes(color.id));
     }
 
     // --- Выбор цвета ---
     function selectColor(colorId, element) {
       const currentPicks = state.phase === 1 ? state.picks.first : state.picks.second;
       
-      // Проверяем, не выбран ли уже цвет
       if (currentPicks.includes(colorId)) return;
       
-      // Добавляем в выбранные
       currentPicks.push(colorId);
-      
-      // Визуально отмечаем выбор
       element.classList.add('selected');
-      element.style.pointerEvents = 'none';
       
-      // Добавляем бейдж выбора
-      const badge = document.createElement('div');
-      badge.className = 'selected-badge';
-      badge.innerHTML = '✓';
-      element.appendChild(badge);
-      
-      // Обновляем прогресс
       updateProgress();
       
-      // Через небольшую задержку обновляем сетку (цвет исчезнет)
-      setTimeout(() => {
-        renderColors();
-      }, 500);
+      if (currentPicks.length === COLORS.length) {
+        if (state.phase === 1) {
+          setTimeout(() => {
+            state.phase = 2;
+            state.colorCards.forEach(card => {
+              card.classList.remove('selected');
+            });
+            updateProgress();
+          }, 800);
+        } else {
+          setTimeout(finishTest, 800);
+        }
+      }
     }
 
     // --- Обновление прогресса ---
@@ -1220,152 +890,161 @@
       const currentPicks = state.phase === 1 ? state.picks.first : state.picks.second;
       const progress = (currentPicks.length / COLORS.length) * 100;
       
-      // Обновляем текст
       elements.progress.phaseText.textContent = `Круг ${state.phase} из 2`;
       elements.progress.phaseIcon.textContent = state.phase === 1 ? '🔄' : '🎯';
       elements.progress.counter.textContent = `${currentPicks.length} из ${COLORS.length}`;
       elements.progress.progressPercent.textContent = `${Math.round(progress)}%`;
-      
-      // Обновляем прогресс-бар
       elements.progress.progressFill.style.width = `${progress}%`;
       
-      // Обновляем подсказку
       const hint = document.getElementById('selection-hint');
       if (hint) {
         if (state.phase === 1) {
-          hint.innerHTML = '🎨 <strong>Круг 1:</strong> Выбирайте цвета от самого приятного к наименее приятному. Выбранные цвета будут исчезать.';
+          hint.innerHTML = '🎨 <strong>Круг 1:</strong> Выбирайте цвета от самого приятного к наименее приятному';
         } else {
-          hint.innerHTML = '🎯 <strong>Круг 2:</strong> Повторите выбор ещё раз, следуя своей интуиции. Цвета снова исчезают после выбора.';
+          hint.innerHTML = '🎯 <strong>Круг 2:</strong> Повторите выбор ещё раз, следуя своей интуиции';
         }
       }
     }
 
-    // --- Анализ результатов ---
-    function analyzeResults() {
+    // --- Анализ результатов (СОВМЕСТИМЫЙ С ОРИГИНАЛОМ) ---
+    function analyzeResults(pick2) {
+      // Создаем маппинг позиций (как в оригинале)
       const positions = {};
-      state.picks.second.forEach((colorId, index) => {
-        positions[colorId] = index;
+      pick2.forEach((id, i) => {
+        positions[id] = i;
       });
       
-      // Группируем цвета по позициям
+      // Функция для определения группы (как в оригинале)
+      function groupOf(pos) {
+        if (pos <= 1) return '++';
+        if (pos <= 3) return '+';
+        if (pos <= 5) return 'x';
+        return '--';
+      }
+      
+      // Группируем цвета (как в оригинале)
       const groups = {
-        favorite: [],   // Позиции 0-1
-        liked: [],      // Позиции 2-3
-        neutral: [],    // Позиции 4-5
-        disliked: []    // Позиции 6-7
+        '++': [],
+        '+': [],
+        'x': [],
+        '--': []
       };
       
       COLORS.forEach(color => {
-        const position = positions[color.id];
-        if (position <= 1) groups.favorite.push(color);
-        else if (position <= 3) groups.liked.push(color);
-        else if (position <= 5) groups.neutral.push(color);
-        else groups.disliked.push(color);
+        const pos = positions[color.id];
+        const group = groupOf(pos);
+        groups[group].push(color.name); // Английские названия для бота
       });
       
-      // Определяем основные характеристики
-      const characteristics = [];
+      // Формируем highlights (как в оригинале, но с добавлением новогодних тем)
+      const highlights = [];
       
-      if (groups.favorite.some(c => c.id === 1)) {
-        characteristics.push('Вам важны гармония и эмоциональная стабильность');
+      if (groups['++'].includes('Black') || groups['++'].includes('Grey')) {
+        highlights.push('Запрос на дистанцию/границы/разрыв. В новогоднюю ночь уделите время себе и своим границам.');
       }
-      if (groups.favorite.some(c => c.id === 3)) {
-        characteristics.push('Вы полны энергии и стремитесь к достижениям');
+      if (groups['++'].includes('Blue')) {
+        highlights.push('Сильная потребность в принятии и покое. Встречайте 2026 год в спокойной обстановке.');
       }
-      if (groups.favorite.some(c => c.id === 4)) {
-        characteristics.push('Оптимизм и надежда ведут вас вперед');
+      if (groups['++'].includes('Red')) {
+        highlights.push('Импульс к действию и результату. 2026 год будет активным и продуктивным для вас!');
       }
-      if (groups.favorite.some(c => c.id === 2)) {
-        characteristics.push('Уверенность в себе и стремление к контролю');
+      if (groups['++'].includes('Yellow')) {
+        highlights.push('Потребность в надежде и перспективе. Новый год принесёт вам новые возможности.');
       }
-      if (groups.disliked.some(c => c.id === 1)) {
-        characteristics.push('Возможно, вы ищете эмоциональные перемены');
+      if (groups['--'].includes('Blue')) {
+        highlights.push('Отвержение тепла → риск эмоциональной изоляции. В 2026 году окружите себя близкими.');
       }
-      if (groups.disliked.some(c => c.id === 2)) {
-        characteristics.push('Временное снижение уверенности в своих силах');
-      }
-      if (groups.favorite.some(c => c.id === 7)) {
-        characteristics.push('Желание перемен и установление границ');
+      if (groups['--'].includes('Green')) {
+        highlights.push('Ощущение снижения контроля/самоуважения. Новый год — время восстановить уверенность.');
       }
       
-      return { positions, groups, characteristics };
+      // Добавляем новогодние акценты
+      if (groups['++'].includes('Violet')) {
+        highlights.push('Творческая энергия просится наружу. В 2026 году реализуйте свои креативные идеи!');
+      }
+      if (groups['++'].includes('Brown')) {
+        highlights.push('Стремление к стабильности и комфорту. Создайте уютную атмосферу для встречи Нового года.');
+      }
+      
+      return {
+        positions: positions,
+        groups: groups,
+        highlights: highlights
+      };
     }
 
     // --- Генерация новогодней истории для 2026 года ---
     function generateNewYearStory(analysis) {
-      const topColors = analysis.groups.favorite.slice(0, 2);
-      const stories = [];
+      const groups = analysis.groups;
+      let story = '';
       
-      // Основная история на основе топ-цветов
-      if (topColors.some(c => c.id === 1)) { // Синий
-        stories.push(
-          "Встречая 2026 год, вы обретёте долгожданный внутренний покой. Как тихий зимний вечер после метели, новый год принесёт вам гармонию и эмоциональное равновесие. Вам откроется мудрость понимания, что самое важное уже рядом — в простых моментах и искренних отношениях."
-        );
+      // Основная история на основе самых любимых цветов
+      if (groups['++'].includes('Blue')) {
+        story += "Встречая 2026 год, вы обретёте долгожданный внутренний покой. ";
       }
-      
-      if (topColors.some(c => c.id === 3)) { // Красный
-        stories.push(
-          "2026 год для вас — как яркий новогодний фейерверк! Энергия и страсть поведут вас к новым вершинам. Не бойтесь смелых решений — вселенная поддержит ваши начинания, а удача станет вашим постоянным спутником. Этот год станет временем активных действий и впечатляющих результатов."
-        );
+      if (groups['++'].includes('Red')) {
+        story += "Энергия и страсть поведут вас к новым достижениям в наступающем году. ";
       }
-      
-      if (topColors.some(c => c.id === 4)) { // Жёлтый
-        stories.push(
-          "Солнечный оптимизм, как жёлтые огоньки гирлянд, осветит ваш путь в 2026 году. Вы увидите возможности там, где другие видят препятствия. Ваша надежда и вера в лучшее станут самым ценным ресурсом, который приведёт к неожиданным и приятным открытиям."
-        );
+      if (groups['++'].includes('Yellow')) {
+        story += "Оптимизм и надежда станут вашими верными спутниками в 2026 году. ";
       }
-      
-      if (topColors.some(c => c.id === 2)) { // Зелёный
-        stories.push(
-          "Как вечнозелёная новогодняя ель, вы стоите твёрдо на своих принципах. 2026 год укрепит вашу уверенность и принесёт заслуженное признание. Ваше упорство и настойчивость превратят даже самые смелые мечты в реальность, которую вы сможете по-настоящему оценить."
-        );
+      if (groups['++'].includes('Green')) {
+        story += "Уверенность в себе поможет реализовать самые смелые планы. ";
       }
       
       // Если нет специфических цветов, общая история
-      if (stories.length === 0) {
-        stories.push(
-          "2026 год принесёт вам баланс и стабильность во всех сферах жизни. Как идеально украшенная новогодняя ёлка, ваша жизнь обретёт гармоничное сочетание работы, отдыха и личного развития. Вы научитесь ценить моменты покоя и наслаждаться активностью в нужное время."
-        );
+      if (!story) {
+        story = "2026 год принесёт вам баланс и гармонию во всех сферах жизни. ";
       }
       
-      // Добавляем про черный и серый
-      if (topColors.some(c => c.id === 7)) { // Чёрный
-        stories.push("2026 год станет временем важных перемен и переоценки ценностей.");
+      // Добавляем про отвергаемые цвета
+      if (groups['--'].includes('Blue')) {
+        story += "Возможно, вы ищете перемен в эмоциональной сфере — новый год предоставит такую возможность. ";
       }
-      if (topColors.some(c => c.id === 0)) { // Серый
-        stories.push("Вы найдёте идеальный баланс между активностью и отдыхом.");
+      if (groups['--'].includes('Green')) {
+        story += "Временное снижение уверенности сменится новыми силами и ясностью целей. ";
       }
       
-      // Генерация пожелания на 2026 год
+      story += "Под бой курантов загадайте самое сокровенное желание — оно имеет все шансы сбыться в наступающем году.";
+      
+      // Пожелание
       const wishes = [
-        "Пусть каждый день 2026 года будет наполнен радостью, а каждое начинание — успехом!",
-        "Желаем, чтобы 2026 год принёс вам исполнение самых сокровенных желаний и светлых надежд!",
-        "Пусть 2026 год будет светлым, как новогодние гирлянды, и тёплым, как семейный уют!",
-        "Желаем здоровья, любви, процветания и удивительных открытий в 2026 году!"
+        "Пусть 2026 год принесёт вам здоровье, любовь, процветание и удивительные открытия!",
+        "Желаем, чтобы каждый день нового года был наполнен радостью, а каждое начинание — успехом!",
+        "Пусть 2026 год будет светлым, как новогодние огни, и тёплым, как семейный уют!",
+        "Желаем исполнения самых заветных желаний и светлых надежд в наступающем году!"
       ];
       
       return {
-        story: stories.join(' '),
+        story: story,
         wish: wishes[Math.floor(Math.random() * wishes.length)]
       };
     }
 
     // --- Завершение теста ---
     function finishTest() {
-      const analysis = analyzeResults();
-      const story = generateNewYearStory(analysis);
+      // Анализируем результаты (совместимо с оригиналом)
+      const result = analyzeResults(state.picks.second);
       
-      // Отправка данных в Telegram
+      // Генерируем новогоднюю историю
+      const story = generateNewYearStory(result);
+      
+      // СОЗДАЕМ ПАЙЛОАД, СОВМЕСТИМЫЙ С ОРИГИНАЛОМ
+      const payload = {
+        type: 'luscher',
+        version: '1.0.0',
+        ts: Date.now(),
+        pick1: state.picks.first,
+        pick2: state.picks.second,
+        result: result, // Тот же самый формат, что в оригинале
+        // Дополнительные поля для новогодней темы (бот их проигнорирует, если не ожидает)
+        newYearStory: story.story,
+        newYearWish: story.wish,
+        year: 2026
+      };
+      
+      // Отправка данных в Telegram (ТОЧНО ТАКАЯ ЖЕ КАК В ОРИГИНАЛЕ)
       if (tg) {
-        const payload = {
-          type: 'new_year_luscher_2026',
-          phase: 'completed',
-          picks: state.picks,
-          analysis: analysis,
-          story: story,
-          timestamp: new Date().toISOString()
-        };
-        
         try {
           tg.sendData(JSON.stringify(payload));
         } catch (e) {
@@ -1373,122 +1052,137 @@
         }
       }
       
-      // Показ результатов
-      displayResults(analysis, story);
+      // Показываем результаты
+      displayResults(result, story);
       showScreen('results');
-      
-      // Добавляем снежинки на экран результатов
-      createSnowflakes();
     }
 
     // --- Отображение результатов ---
     function displayResults(analysis, story) {
       const groups = analysis.groups;
       
-      // Отображаем группы цветов
+      // Преобразуем английские названия в русские для отображения
+      function getRuName(engName) {
+        const color = COLORS.find(c => c.name === engName);
+        return color ? color.ruName : engName;
+      }
+      
       elements.results.groups.innerHTML = `
         <div class="result-group">
           <div class="group-header">
             <span>❤️</span>
-            <span>Любимые цвета</span>
+            <span>Любимые цвета (++)</span>
           </div>
           <div class="group-content">
-            ${groups.favorite.map(color => `
-              <div class="color-tag" style="border-left: 4px solid ${color.hex}">
-                ${color.emoji} ${color.name}
-              </div>
-            `).join('')}
+            ${groups['++'].map(colorName => {
+              const color = COLORS.find(c => c.name === colorName);
+              return `
+                <div class="color-tag" style="border-left: 3px solid ${color ? color.hex : '#ccc'}">
+                  ${color ? color.emoji : ''} ${getRuName(colorName)}
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
         
         <div class="result-group">
           <div class="group-header">
             <span>✨</span>
-            <span>Приятные цвета</span>
+            <span>Приятные цвета (+)</span>
           </div>
           <div class="group-content">
-            ${groups.liked.map(color => `
-              <div class="color-tag" style="border-left: 4px solid ${color.hex}">
-                ${color.emoji} ${color.name}
-              </div>
-            `).join('')}
+            ${groups['+'].map(colorName => {
+              const color = COLORS.find(c => c.name === colorName);
+              return `
+                <div class="color-tag" style="border-left: 3px solid ${color ? color.hex : '#ccc'}">
+                  ${color ? color.emoji : ''} ${getRuName(colorName)}
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
         
         <div class="result-group">
           <div class="group-header">
             <span>⚖️</span>
-            <span>Нейтральные цвета</span>
+            <span>Нейтральные цвета (x)</span>
           </div>
           <div class="group-content">
-            ${groups.neutral.map(color => `
-              <div class="color-tag" style="border-left: 4px solid ${color.hex}">
-                ${color.emoji} ${color.name}
-              </div>
-            `).join('')}
+            ${groups['x'].map(colorName => {
+              const color = COLORS.find(c => c.name === colorName);
+              return `
+                <div class="color-tag" style="border-left: 3px solid ${color ? color.hex : '#ccc'}">
+                  ${color ? color.emoji : ''} ${getRuName(colorName)}
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
         
         <div class="result-group">
           <div class="group-header">
             <span>🌙</span>
-            <span>Неприятные цвета</span>
+            <span>Неприятные цвета (--)</span>
           </div>
           <div class="group-content">
-            ${groups.disliked.map(color => `
-              <div class="color-tag" style="border-left: 4px solid ${color.hex}">
-                ${color.emoji} ${color.name}
-              </div>
-            `).join('')}
+            ${groups['--'].map(colorName => {
+              const color = COLORS.find(c => c.name === colorName);
+              return `
+                <div class="color-tag" style="border-left: 3px solid ${color ? color.hex : '#ccc'}">
+                  ${color ? color.emoji : ''} ${getRuName(colorName)}
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
       `;
       
-      // Отображаем историю
       elements.results.story.textContent = story.story;
-      elements.results.wish.textContent = story.wish + " 🎆 2026";
+      elements.results.wish.textContent = story.wish;
       
       // Формируем текстовый вывод
       const output = {
         'Новогодний тест Люшера 2026': 'Результаты',
-        'Дата теста': new Date().toLocaleDateString('ru-RU', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        }),
-        'Любимые цвета': groups.favorite.map(c => `${c.emoji} ${c.name}`).join(', '),
-        'Приятные цвета': groups.liked.map(c => `${c.emoji} ${c.name}`).join(', '),
-        'Нейтральные цвета': groups.neutral.map(c => `${c.emoji} ${c.name}`).join(', '),
-        'Неприятные цвета': groups.disliked.map(c => `${c.emoji} ${c.name}`).join(', '),
-        'Психологические инсайты': analysis.characteristics,
-        'Ваша новогодняя история 2026': story.story,
-        'Пожелание на 2026 год': story.wish,
-        '---': 'С наступающим Новым 2026 Годом! 🎄✨'
+        'Дата': new Date().toLocaleDateString('ru-RU'),
+        'Любимые цвета (++)': groups['++'].map(name => getRuName(name)).join(', '),
+        'Приятные цвета (+)': groups['+'].map(name => getRuName(name)).join(', '),
+        'Нейтральные цвета (x)': groups['x'].map(name => getRuName(name)).join(', '),
+        'Неприятные цвета (--)': groups['--'].map(name => getRuName(name)).join(', '),
+        'Психологические инсайты': analysis.highlights,
+        'Новогодняя история 2026': story.story,
+        'Пожелание на 2026 год': story.wish
       };
       
       elements.results.output.value = Object.entries(output)
-        .map(([key, value]) => `${key}:\n${value}\n`)
+        .map(([key, value]) => {
+          if (Array.isArray(value)) {
+            return `【${key}】\n${value.join('\n')}\n`;
+          }
+          return `【${key}】\n${value}\n`;
+        })
         .join('\n');
     }
 
-    // --- Функция сохранения результатов ---
-    function saveResults() {
-      const text = elements.results.output.value;
-      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
+    // --- Копирование результатов ---
+    function copyResults() {
+      const textarea = elements.results.output;
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
       
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `новогодний-тест-2026-${new Date().toISOString().split('T')[0]}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      // Показываем уведомление
-      alert('Результаты сохранены в файл! Можете поделиться ими с друзьями. ✨');
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          alert('Результаты скопированы в буфер обмена! 📋');
+        } else {
+          navigator.clipboard.writeText(textarea.value).then(() => {
+            alert('Результаты скопированы в буфер обмена! 📋');
+          });
+        }
+      } catch (err) {
+        navigator.clipboard.writeText(textarea.value).then(() => {
+          alert('Результаты скопированы в буфер обмена! 📋');
+        });
+      }
     }
 
     // --- Инициализация событий ---
@@ -1497,33 +1191,16 @@
       elements.buttons.restart.addEventListener('click', () => {
         showScreen('welcome');
       });
-      elements.buttons.share.addEventListener('click', saveResults);
-      
-      // Обработка касаний для мобильных устройств
-      document.addEventListener('touchstart', function() {}, {passive: true});
+      elements.buttons.copy.addEventListener('click', copyResults);
     }
 
     // --- Инициализация приложения ---
     function initApp() {
-      createSnowflakes();
       initEvents();
       showScreen('welcome');
-      
-      // Адаптация под мобильные устройства
-      function handleResize() {
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-      }
-      
-      window.addEventListener('resize', handleResize);
-      window.addEventListener('orientationchange', handleResize);
-      handleResize();
-      
-      // Добавляем новогоднее настроение
-      console.log('✨ С Новым 2026 Годом! Пусть ваш тест принесёт интересные открытия!');
     }
 
-    // Запуск приложения при загрузке
+    // Запуск приложения
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initApp);
     } else {
